@@ -4,11 +4,27 @@ import { motion, AnimatePresence } from 'motion/react';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
+const formatTime = (timestamp: number): string => {
+  const date = new Date(timestamp);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+
+  if (diffMins < 1) return '刚刚';
+  if (diffMins < 60) return `${diffMins}分钟前`;
+  if (diffHours < 24) return `${diffHours}小时前`;
+  if (diffDays < 7) return `${diffDays}天前`;
+  return date.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
+};
+
 export interface Todo {
   id: string;
   text: string;
   completed: boolean;
   createdAt: number;
+  completedAt?: number;
 }
 
 interface TodoListProps {
@@ -28,9 +44,10 @@ interface TodoItemProps {
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
   onMove: (dragIndex: number, hoverIndex: number) => void;
+  currentTime: number;
 }
 
-function TodoItem({ todo, index, onToggle, onDelete, onMove }: TodoItemProps) {
+function TodoItem({ todo, index, onToggle, onDelete, onMove, currentTime }: TodoItemProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   const [{ isDragging }, drag, dragPreview] = useDrag({
@@ -119,6 +136,14 @@ function TodoItem({ todo, index, onToggle, onDelete, onMove }: TodoItemProps) {
           {todo.text}
         </span>
 
+        {/* Time Info */}
+        <div className="flex-shrink-0 flex flex-col items-end mr-2">
+          <span className="text-xs text-foreground/40">{formatTime(todo.createdAt)}</span>
+          {todo.completed && todo.completedAt && (
+            <span className="text-xs text-emerald-500">{formatTime(todo.completedAt)}</span>
+          )}
+        </div>
+
         {/* Delete Button */}
         <motion.button
           initial={{ opacity: 0 }}
@@ -148,11 +173,21 @@ export function TodoList({ onTaskComplete }: TodoListProps) {
     return [];
   });
   const [inputValue, setInputValue] = useState('');
+  const [currentTime, setCurrentTime] = useState(Date.now());
 
   // Save to localStorage whenever todos change
   useEffect(() => {
     localStorage.setItem('pomodoro-todos', JSON.stringify(todos));
   }, [todos]);
+
+  // Update current time every minute to refresh relative time display
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(Date.now());
+    }, 60000); // Update every minute
+
+    return () => clearInterval(interval);
+  }, []);
 
   const addTodo = () => {
     if (inputValue.trim()) {
@@ -174,8 +209,10 @@ export function TodoList({ onTaskComplete }: TodoListProps) {
           const newCompleted = !todo.completed;
           if (newCompleted) {
             onTaskComplete?.();
+            return { ...todo, completed: newCompleted, completedAt: Date.now() };
+          } else {
+            return { ...todo, completed: newCompleted, completedAt: undefined };
           }
-          return { ...todo, completed: newCompleted };
         }
         return todo;
       })
@@ -248,6 +285,7 @@ export function TodoList({ onTaskComplete }: TodoListProps) {
               onToggle={toggleTodo}
               onDelete={deleteTodo}
               onMove={moveTodo}
+              currentTime={currentTime}
             />
           ))}
         </AnimatePresence>
