@@ -99,7 +99,7 @@ function TodoItem({ todo, index, onToggle, onDelete, onMove, currentTime }: Todo
         {/* Drag Handle */}
         <div
           ref={drag as unknown as React.RefObject<HTMLDivElement>}
-          className="flex-shrink-0 cursor-grab active:cursor-grabbing text-foreground/20 hover:text-foreground/40 transition-colors touch-none"
+          className="flex-shrink-0 cursor-grab active:cursor-grabbing text-foreground/20 hover:text-foreground/40 transition-colors"
         >
           <GripVertical size={16} />
         </div>
