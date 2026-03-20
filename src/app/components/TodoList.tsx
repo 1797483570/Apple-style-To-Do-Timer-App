@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Plus, Check, Trash2, GripVertical } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { TouchBackend } from 'react-dnd-touch-backend';
 
 const formatTime = (timestamp: number): string => {
   const date = new Date(timestamp);
@@ -242,7 +242,7 @@ export function TodoList({ onTaskComplete }: TodoListProps) {
   const completedTodos = todos.filter((t) => t.completed);
 
   return (
-    <DndProvider backend={HTML5Backend}>
+    <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
     <div className="w-full">
       {/* Input */}
       <div className="mb-6">
