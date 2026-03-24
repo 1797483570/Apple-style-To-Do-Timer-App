@@ -8,7 +8,7 @@ interface TabBarProps {
 
 export function TabBar({ activeTab, onTabChange }: TabBarProps) {
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-t border-black/5 safe-area-bottom">
+    <div className="fixed bottom-0 left-0 right-0 bg-background/80 backdrop-blur-xl border-t border-border safe-area-bottom">
       <div className="max-w-md mx-auto flex">
         <button
           onClick={() => onTabChange('timer')}

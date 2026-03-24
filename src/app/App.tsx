@@ -5,12 +5,15 @@ import { TabBar } from './components/TabBar';
 import { TimeSettings } from './components/TimeSettings';
 import { motion, AnimatePresence } from 'motion/react';
 import { toast, Toaster } from 'sonner';
+import { useTheme } from '@/hooks/useTheme';
+import { Sun, Moon } from 'lucide-react';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<'timer' | 'todo'>('timer');
   const [showSettings, setShowSettings] = useState(false);
   const [focusDuration, setFocusDuration] = useState(25 * 60); // 25 minutes in seconds
   const [breakDuration, setBreakDuration] = useState(5 * 60); // 5 minutes in seconds
+  const { theme, toggleTheme } = useTheme();
 
   const handleSessionComplete = () => {
     toast.success('🍅 番茄钟完成！', {
@@ -35,7 +38,7 @@ export default function App() {
   };
 
   return (
-    <div className="size-full min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 overflow-hidden">
+    <div className="size-full min-h-screen bg-background overflow-hidden">
       <Toaster position="top-center" richColors />
       
       {/* Main Content */}
@@ -44,7 +47,7 @@ export default function App() {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
+          className="mb-8 relative"
         >
           <h1 className="text-4xl tracking-tight mb-2">
             {activeTab === 'timer' ? '番茄钟' : '待办事项'}
@@ -54,6 +57,13 @@ export default function App() {
               ? '专注工作，高效生活'
               : '记录任务，井然有序'}
           </p>
+          <button
+            onClick={toggleTheme}
+            className="absolute top-0 right-0 p-2 rounded-full hover:bg-foreground/5 transition-colors"
+            aria-label="切换主题"
+          >
+            {theme === 'dark' ? <Sun className="size-5" /> : <Moon className="size-5" />}
+          </button>
         </motion.div>
 
         {/* Content */}

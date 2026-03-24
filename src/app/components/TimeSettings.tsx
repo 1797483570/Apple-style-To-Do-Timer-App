@@ -121,7 +121,7 @@ export function TimeSettings({ focusDuration, breakDuration, onSave, onClose }: 
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
         onClick={(e) => e.stopPropagation()}
-        className="bg-white/90 backdrop-blur-xl rounded-3xl p-8 max-w-md w-full shadow-2xl max-h-[90vh] overflow-y-auto"
+        className="bg-card/90 backdrop-blur-xl rounded-3xl p-8 max-w-md w-full shadow-2xl max-h-[90vh] overflow-y-auto"
       >
         <h2 className="text-2xl mb-6">时长设置</h2>
 
@@ -137,7 +137,7 @@ export function TimeSettings({ focusDuration, breakDuration, onSave, onClose }: 
                 cy="96"
                 r="86"
                 fill="none"
-                stroke="rgba(0,0,0,0.05)"
+                stroke="var(--color-border)"
                 strokeWidth="12"
               />
               {/* Hour markers */}
@@ -154,7 +154,7 @@ export function TimeSettings({ focusDuration, breakDuration, onSave, onClose }: 
                     y1={y1}
                     x2={x2}
                     y2={y2}
-                    stroke="rgba(0,0,0,0.2)"
+                    stroke="hsl(var(--color-foreground) / 0.2)"
                     strokeWidth="2"
                     strokeLinecap="round"
                   />
@@ -229,7 +229,7 @@ export function TimeSettings({ focusDuration, breakDuration, onSave, onClose }: 
                 cy="96"
                 r="86"
                 fill="none"
-                stroke="rgba(0,0,0,0.05)"
+                stroke="var(--color-border)"
                 strokeWidth="12"
               />
               {/* Hour markers */}
@@ -246,7 +246,7 @@ export function TimeSettings({ focusDuration, breakDuration, onSave, onClose }: 
                     y1={y1}
                     x2={x2}
                     y2={y2}
-                    stroke="rgba(0,0,0,0.2)"
+                    stroke="hsl(var(--color-foreground) / 0.2)"
                     strokeWidth="2"
                     strokeLinecap="round"
                   />
@@ -313,7 +313,7 @@ export function TimeSettings({ focusDuration, breakDuration, onSave, onClose }: 
         <div className="flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 px-6 py-3 rounded-2xl bg-white/60 hover:bg-white/80 transition-colors"
+            className="flex-1 px-6 py-3 rounded-2xl bg-card/60 hover:bg-card/80 transition-colors"
           >
             取消
           </button>
