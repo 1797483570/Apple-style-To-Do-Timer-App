@@ -1,9 +1,10 @@
 
   # 苹果简约风格的todo+待办小工具
+  [体验地址](https://1797483570.github.io/Apple-style-To-Do-Timer-App/)
   ## 1、包含功能
-1. 番茄钟🍅倒计时，支持设置专注和休息时长
-2. 待办，支持新增、完成、删除和拖拽排序
-3. 支持深色模式
+1. 番茄钟🍅页，支持设置专注和休息时长。
+2. 待办页，支持新增、完成、删除和拖拽排序。
+3. 支持深色模式。
   ## 2、预览
   <img width="468" height="906" alt="6500bbb82d7be9a0" src="https://github.com/user-attachments/assets/9f05b836-f051-4af9-a935-1dc3667f09ae" />
 <img width="423" height="895" alt="212943f629a0c92f" src="https://github.com/user-attachments/assets/43ec2d7a-ccfd-4f97-b544-a217ef7c52d1" />
